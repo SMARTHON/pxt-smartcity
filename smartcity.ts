@@ -38,7 +38,6 @@ namespace SmartCity {
         temp =  2*2*out_red + 2*out_yellow + out_green
         temp = temp*125
         pins.analogWritePin(traffic_pin, temp)
-        basic.showNumber(temp)
 
     }
 	
