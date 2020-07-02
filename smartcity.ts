@@ -38,7 +38,7 @@ namespace SmartCity {
         temp =  2*2*out_red + 2*out_yellow + out_green
         temp = temp*125
         pins.analogWritePin(traffic_pin, temp)
-
+		basic.pause(500)
     }
 	
 	//% blockId=read_light_sensor
@@ -65,11 +65,12 @@ namespace SmartCity {
     //% block="Get motion (triggered or not) at Pin %motion_pin"
     //% weight=180
 	//% blockGap=7
-    export function read_motion_sensor(motion_pin: AnalogPin): number {
+    export function read_motion_sensor(motion_pin: AnalogPin): boolean {
         temp_pin = parseInt(motion_pin.toString())
 		temp = pins.analogReadPin(temp_pin)
-		//temp = Math.round(100 - pins.analogReadPin(temp_pin)/1023*100)
-        return temp
+		if (temp > 800)
+			return true
+		else return false
     }
 	
 	//% blockId=read_sound_sensors
