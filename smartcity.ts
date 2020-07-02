@@ -74,7 +74,7 @@ namespace SmartCity {
     }
 	
 	//% blockId=read_sound_sensors
-    //% block="Get noice level (dB) at Pin %sound_pin"
+    //% block="Get noise level (dB) at Pin %sound_pin"
     //% weight=170
 	//% blockGap=7
     export function read_sound_sensor(sound_pin: AnalogPin): number {
