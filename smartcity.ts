@@ -7,6 +7,14 @@ namespace SmartCity {
     }
 	
 	
+
+	export enum DHT11dataType {
+    //% block="humidity"
+    humidity,
+    //% block="temperature"
+    temperature,
+	}
+	
 	export enum DistanceUnit {
     //% block="μs"
     MicroSeconds,
@@ -16,20 +24,14 @@ namespace SmartCity {
     Inches
 	}
 	
-	 export enum DHT11_Unit {
-        //% block="temperature(C)"
-        DHT11_temperature_C=0,
-
-        //% block="temperature(F)"
-        DHT11_temperature_F=1,
-
-        //% block="humidity(0~100)"
-        DHT11_humidity=2,
-    }
+    
 
     let temp = 0
 	let temp_pin=0
-
+	let _temperature: number = -999.0
+    let _humidity: number = -999.0
+    let _readSuccessful: boolean = false
+	
 
     //% blockId=control_traffic_light
     //% block="Control traffic light at Pin %traffic_pin|Red %out_red|Yellow %out_yellow|Green %out_green"
@@ -84,80 +86,85 @@ namespace SmartCity {
         return temp
     }
 	
-	//% blockId="read_dht11_sensor"
-    //% block="Get DHT11 %dht11unit| at pin %dht11pin"
+    //% block="Get DHT11 at pin %dataPin|"
+    function dht11_queryData( dataPin: DigitalPin) {
+
+        //initialize
+        let startTime: number = 0
+        let endTime: number = 0
+        let checksum: number = 0
+        let checksumTmp: number = 0
+        let dataArray: boolean[] = []
+        let resultArray: number[] = []
+        for (let index = 0; index < 40; index++) dataArray.push(false)
+        for (let index = 0; index < 5; index++) resultArray.push(0)
+        _humidity = -999.0
+        _temperature = -999.0
+        _readSuccessful = false
+
+        startTime = input.runningTimeMicros()
+
+        //request data
+        pins.digitalWritePin(dataPin, 0) //begin protocol
+        basic.pause(18)
+        //if (pullUp) pins.setPull(dataPin, PinPullMode.PullUp) //pull up data pin if needed
+        pins.digitalReadPin(dataPin)
+        control.waitMicros(20)
+        while (pins.digitalReadPin(dataPin) == 1);
+        while (pins.digitalReadPin(dataPin) == 0); //sensor response
+        while (pins.digitalReadPin(dataPin) == 1); //sensor response
+
+        //read data (5 bytes)
+        for (let index = 0; index < 40; index++) {
+            while (pins.digitalReadPin(dataPin) == 1);
+            while (pins.digitalReadPin(dataPin) == 0);
+            control.waitMicros(28)
+            //if sensor pull up data pin for more than 28 us it means 1, otherwise 0
+            if (pins.digitalReadPin(dataPin) == 1) dataArray[index] = true
+        }
+
+        endTime = input.runningTimeMicros()
+
+        //convert byte number array to integer
+        for (let index = 0; index < 5; index++)
+            for (let index2 = 0; index2 < 8; index2++)
+                if (dataArray[8 * index + index2]) resultArray[index] += 2 ** (7 - index2)
+
+        //verify checksum
+        checksumTmp = resultArray[0] + resultArray[1] + resultArray[2] + resultArray[3]
+        checksum = resultArray[4]
+        if (checksumTmp >= 512) checksumTmp -= 512
+        if (checksumTmp >= 256) checksumTmp -= 256
+        if (checksum == checksumTmp) _readSuccessful = true
+
+        //read data if checksum ok
+        if (_readSuccessful) {
+            
+                //DHT11
+                _humidity = resultArray[0] + resultArray[1] / 100
+                _temperature = resultArray[2] + resultArray[3] / 100
+            
+        }
+
+        //wait 2 sec after query 
+        basic.pause(2000)
+
+    }
+
+    //% block="DHT11 Read %dht11data| at pin %dht11pin|"
 	//% weight=150
 	//% blockGap=7
-    export function dht11value(dht11unit: DHT11_Unit, dht11pin: DigitalPin): number {
-
-        pins.digitalWritePin(dht11pin, 0)
-        basic.pause(18)
-        let i = pins.digitalReadPin(dht11pin)
-        pins.setPull(dht11pin, PinPullMode.PullUp);
-        switch (dht11unit) {
-            case 0:
-                let dhtvalue0 = 0;
-                let dhtcounter0 = 0;
-                while (pins.digitalReadPin(dht11pin) == 1);
-                while (pins.digitalReadPin(dht11pin) == 0);
-                while (pins.digitalReadPin(dht11pin) == 1);
-                for (let i = 0; i <= 32 - 1; i++) {
-                    while (pins.digitalReadPin(dht11pin) == 0);
-                    dhtcounter0 = 0
-                    while (pins.digitalReadPin(dht11pin) == 1) {
-                        dhtcounter0 += 1;
-                    }
-                    if (i > 15) {
-                        if (dhtcounter0 > 2) {
-                            dhtvalue0 = dhtvalue0 + (1 << (31 - i));
-                        }
-                    }
-                }
-                return ((dhtvalue0 & 0x0000ff00) >> 8);
-                break;
-            case 1:
-                while (pins.digitalReadPin(dht11pin) == 1);
-                while (pins.digitalReadPin(dht11pin) == 0);
-                while (pins.digitalReadPin(dht11pin) == 1);
-                let dhtvalue1 = 0;
-                let dhtcounter1 = 0;
-                for (let i = 0; i <= 32 - 1; i++) {
-                    while (pins.digitalReadPin(dht11pin) == 0);
-                    dhtcounter1 = 0
-                    while (pins.digitalReadPin(dht11pin) == 1) {
-                        dhtcounter1 += 1;
-                    }
-                    if (i > 15) {
-                        if (dhtcounter1 > 2) {
-                            dhtvalue1 = dhtvalue1 + (1 << (31 - i));
-                        }
-                    }
-                }
-                return Math.round((((dhtvalue1 & 0x0000ff00) >> 8) * 9 / 5) + 32);
-                break;
-            case 2:
-                while (pins.digitalReadPin(dht11pin) == 1);
-                while (pins.digitalReadPin(dht11pin) == 0);
-                while (pins.digitalReadPin(dht11pin) == 1);
-
-                let value2 = 0;
-                let counter2 = 0;
-
-                for (let i = 0; i <= 8 - 1; i++) {
-                    while (pins.digitalReadPin(dht11pin) == 0);
-                    counter2 = 0
-                    while (pins.digitalReadPin(dht11pin) == 1) {
-                        counter2 += 1;
-                    }
-                    if (counter2 > 3) {
-                        value2= value2 + (1 << (7 - i));
-                    }
-                }
-                return value2;
-            default:
-                return 0;
-        }
+    export function readData(dht11data: DHT11dataType, dht11pin: DigitalPin): number {
+		// querydata
+		dht11_queryData(dht11pin)
+		//return temperature /humidity
+		if(dht11data == DHT11dataType.temperature && _readSuccessful)
+			return Math.round (_temperature)
+		else if(dht11data == DHT11dataType.humidity && _readSuccessful)
+			return Math.round (_humidity)
+		else return 0
     }
+
 	 
 	//% blockId=read_distance_sensor
 	//% block="Get distance unit %unit|trig %trig|echo %echo"
