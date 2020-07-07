@@ -9,10 +9,10 @@ namespace SmartCity {
 	
 
 	export enum DHT11dataType {
-    //% block="humidity"
-    humidity,
     //% block="temperature"
     temperature,
+	//% block="humidity"
+    humidity
 	}
 	
 	export enum DistanceUnit {
@@ -165,25 +165,30 @@ namespace SmartCity {
 		else return 0
     }
 
-	 
+	
 	//% blockId=read_distance_sensor
 	//% block="Get distance unit %unit|trig %trig|echo %echo"
 	//% weight=140
     export function read_distance_sensor(unit: DistanceUnit, trig: DigitalPin, echo: DigitalPin, maxCmDistance = 500): number {
         // send pulse
+        let d=10;
         pins.setPull(trig, PinPullMode.PullNone);
-        pins.digitalWritePin(trig, 0);
-        control.waitMicros(2);
-        pins.digitalWritePin(trig, 1);
-        control.waitMicros(10);
-        pins.digitalWritePin(trig, 0);
-
-        // read pulse
-        const d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+        for (let x=0; x<10; x++)
+        {
+            pins.digitalWritePin(trig, 0);
+            control.waitMicros(2);
+            pins.digitalWritePin(trig, 1);
+            control.waitMicros(10);
+            pins.digitalWritePin(trig, 0);
+            // read pulse
+            d = pins.pulseIn(echo, PulseValue.High, maxCmDistance * 58);
+            if (d>0)
+                break;
+        }
 
         switch (unit) {
-            case DistanceUnit.Centimeters: return Math.idiv(d, 58);
-            case DistanceUnit.Inches: return Math.idiv(d, 148);
+            case DistanceUnit.Centimeters: return Math.round(d/58*1.4);
+            case DistanceUnit.Inches: return Math.round(d/148*1.4);
             default: return d ;
         }
     }
