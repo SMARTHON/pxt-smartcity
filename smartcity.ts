@@ -36,6 +36,7 @@ namespace SmartCity {
     //% blockId=control_traffic_light
     //% block="Control traffic light at Pin %traffic_pin|Red %out_red|Yellow %out_yellow|Green %out_green"
     //% weight=250
+	
     export function control_traffic_light(traffic_pin: AnalogPin, out_red: On_Off, out_yellow: On_Off, out_green: On_Off): void {
         temp =  2*2*out_red + 2*out_yellow + out_green
         temp = temp*125
@@ -216,17 +217,5 @@ namespace SmartCity {
     }
 	
 
-    
-	
-	
-	//% blockId=read_sensors
-    //% block="Get general sensor analog value at Pin %gen_pin"
-    //% weight=130
-    export function read_sensor(gen_pin: AnalogPin): number {
-        temp_pin = parseInt(gen_pin.toString())
-		temp = Math.round(pins.analogReadPin(temp_pin))
-        return temp
-    }
-	
 }
 
