@@ -16,12 +16,12 @@ namespace SmartCity {
 	}
 	
 	export enum DistanceUnit {
-    //% block="μs"
-    MicroSeconds,
     //% block="cm"
     Centimeters,
     //% block="inches"
-    Inches
+    Inches,
+	 //% block="μs"
+    MicroSeconds
 	}
 	
     
@@ -169,6 +169,7 @@ namespace SmartCity {
 	//% blockId=read_distance_sensor
 	//% block="Get distance unit %unit|trig %trig|echo %echo"
 	//% weight=140
+	//% trig.defl=DigitalPin.P14 echo.defl=DigitalPin.P15
     export function read_distance_sensor(unit: DistanceUnit, trig: DigitalPin, echo: DigitalPin, maxCmDistance = 500): number {
         // send pulse
         let d=10;
