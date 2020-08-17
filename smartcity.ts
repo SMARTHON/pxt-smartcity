@@ -32,7 +32,7 @@ namespace SmartCity {
     let _humidity: number = -999.0
     let _readSuccessful: boolean = false
 	
-
+	//%subcategory=Output
     //% blockId=control_traffic_light
     //% block="Control traffic light at Pin %traffic_pin|Red %out_red|Yellow %out_yellow|Green %out_green"
     //% weight=250
@@ -41,6 +41,26 @@ namespace SmartCity {
         temp = temp*125
         pins.analogWritePin(traffic_pin, temp)
 		basic.pause(500)
+    }
+	
+	//%subcategory=Output
+    //%blockId=control_Servo
+    //%block="Turn Servo to %deg degree |at %pin"
+    //% weight=240
+    //% deg.min=0 deg.max=180
+    export function turn_servo(deg: number, pin: AnalogPin): void {
+        pins.servoWritePin(pin, deg)
+        basic.pause(500)
+    }
+	
+	//%subcategory=Output
+    //%blockId=control_LED
+    //%block="Turn White LED to %intensity |at %pin"
+    //% weight=245
+    //% intensity.min=0 intensity.max=1023
+    export function turn_white_led(intensity: number, pin: AnalogPin): void {
+        pins.analogWritePin(pin, intensity)
+        basic.pause(500)
     }
 	
 	//% blockId=read_light_sensor
@@ -53,6 +73,7 @@ namespace SmartCity {
         return temp
     }
 
+	
 	//% blockId=read_raindrop_sensor
     //% block="Get raindrop value (percentage) at Pin %rain_pin"
     //% weight=200
