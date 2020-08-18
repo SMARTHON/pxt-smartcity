@@ -67,7 +67,6 @@ namespace SmartCity {
 	//% blockId=read_light_sensor
     //% block="Get light value (percentage) at Pin %light_pin"
     //% weight=225
-	//% blockGap=7
     export function read_light_sensor(light_pin: AnalogPin): number {
         temp_pin = parseInt(light_pin.toString())
 		temp = Math.round(100 - pins.analogReadPin(temp_pin)/1023*100)
@@ -78,7 +77,6 @@ namespace SmartCity {
 	//% blockId=read_raindrop_sensor
     //% block="Get raindrop value (percentage) at Pin %rain_pin"
     //% weight=200
-	//% blockGap=7
     export function read_raindrop_sensor(rain_pin: AnalogPin): number {
         temp_pin = parseInt(rain_pin.toString())
 		temp = Math.round(pins.analogReadPin(temp_pin)/1023*100)
@@ -88,7 +86,6 @@ namespace SmartCity {
 	//% blockId=read_motion_sensor
     //% block="Get motion (triggered or not) at Pin %motion_pin"
     //% weight=180
-	//% blockGap=7
     export function read_motion_sensor(motion_pin: AnalogPin): boolean {
         temp_pin = parseInt(motion_pin.toString())
 		temp = pins.analogReadPin(temp_pin)
@@ -100,7 +97,6 @@ namespace SmartCity {
 	//% blockId=read_sound_sensors
     //% block="Get noise level (dB) at Pin %sound_pin"
     //% weight=170
-	//% blockGap=7
     export function read_sound_sensor(sound_pin: AnalogPin): number {
         temp_pin = parseInt(sound_pin.toString())
 		temp = pins.map(Math.abs(pins.analogReadPin(temp_pin) - 512),0,512,0,1023);
@@ -175,7 +171,6 @@ namespace SmartCity {
 
     //% block="DHT11 Read %dht11data| at pin %dht11pin|"
 	//% weight=150
-	//% blockGap=7
     export function readData(dht11data: DHT11dataType, dht11pin: DigitalPin): number {
 		// querydata
 		dht11_queryData(dht11pin)
