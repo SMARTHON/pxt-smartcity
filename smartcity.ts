@@ -69,7 +69,7 @@ namespace SmartCity {
     //% weight=225
     export function read_light_sensor(light_pin: AnalogPin): number {
         temp_pin = parseInt(light_pin.toString())
-		temp = Math.round(100 - pins.analogReadPin(temp_pin)/1023*100)
+		temp = Math.round(pins.analogReadPin(temp_pin)/1023*100)
         return temp
     }
 
