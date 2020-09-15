@@ -5,7 +5,6 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-		"neopixel": "github:microsoft/pxt-neopixel#v0.6.12",
 		"WiFiIoT" : "github:SMARTHON/pxt-iot-bit"
     },
     "files": [
