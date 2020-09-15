@@ -5,7 +5,7 @@
     "license": "MIT",
     "dependencies": {
         "core": "*",
-		"WiFiIoT" : "github:SMARTHON/pxt-iot-bit"
+		"WiFiIoT" : "github:SMARTHON/pxt-iot-bit#v0.4.16"
     },
     "files": [
         "README.md",
