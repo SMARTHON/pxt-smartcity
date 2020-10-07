@@ -99,9 +99,13 @@ namespace SmartCity {
     //% weight=170
     export function read_sound_sensor(sound_pin: AnalogPin): number {
         temp_pin = parseInt(sound_pin.toString())
-		temp = pins.map(Math.abs(pins.analogReadPin(temp_pin) - 512),0,512,0,1023);
+		let sum=0;
+        for(let i=0;i<20;i++){
+		temp = pins.map(Math.abs(pins.analogReadPin(temp_pin) - 520),0,520,0,1023);
 		temp =temp/1023*100
-        return temp
+        sum=sum+temp;
+        }
+        return sum/20;
     }
 	
     //% block="Get DHT11 at pin %dataPin|"
