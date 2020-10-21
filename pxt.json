@@ -1,11 +1,11 @@
 {
     "name": "smartcity",
-    "version": "0.1.27",
+    "version": "0.1.28",
     "description": "This is the extension for SMARTHON City IoT Starter Kit in PXT",
     "license": "MIT",
     "dependencies": {
         "core": "*",
-		"WiFi-IoT-bit" : "github:SMARTHON/pxt-iot-bit#v0.4.21",
+		"WiFi-IoT-bit" : "github:SMARTHON/pxt-iot-bit#v0.4.22",
 		"neopixel": "github:microsoft/pxt-neopixel#v0.6.12"
     },
     "files": [
