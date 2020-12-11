@@ -188,9 +188,10 @@ namespace SmartCity {
 
 	
 	//% blockId=read_distance_sensor
-	//% block="Get distance unit %unit|trig %trig|echo %echo"
+	//% block="Get distance unit %unit trig %trig echo %echo"
 	//% weight=140
 	//% trig.defl=DigitalPin.P14 echo.defl=DigitalPin.P15
+	//% inlineInputMode=inline
     export function read_distance_sensor(unit: DistanceUnit, trig: DigitalPin, echo: DigitalPin, maxCmDistance = 500): number {
         // send pulse
         let d=10;
