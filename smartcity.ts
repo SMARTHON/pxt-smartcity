@@ -32,13 +32,26 @@ namespace SmartCity {
     let _humidity: number = -999.0
     let _readSuccessful: boolean = false
 	
+	/**
+     * Set traffic light
+     * @param out_red describe parameter here, eg: boolean.true
+     * @param out_yellow describe parameter here, eg: boolean.true
+     * @param out_green describe parameter here, eg: boolean.true
+     */ 
+
 	//%subcategory=Output
     //% blockId=control_traffic_light
-    //% block="Control traffic light at Pin %traffic_pin|Red %out_red|Yellow %out_yellow|Green %out_green"
+    //% block="Control traffic light |Red $out_red Yellow $out_yellow Green $out_green at Pin %traffic_pin"
+    //% out_red.shadow="toggleOnOff" 
+    //% out_yellow.shadow="toggleOnOff" 
+    //% out_green.shadow="toggleOnOff"
     //% weight=250
 	
-    export function control_traffic_light(traffic_pin: AnalogPin, out_red: On_Off, out_yellow: On_Off, out_green: On_Off): void {
-        temp =  2*2*out_red + 2*out_yellow + out_green
+    export function control_traffic_light( out_red: boolean, out_yellow: boolean, out_green: boolean,traffic_pin: AnalogPin): void {
+        let red=out_red?1:0;
+        let yellow=out_yellow?1:0;
+        let green=out_green?1:0;
+        temp =  2*2*red + 2*yellow +green
         temp = temp*125
         pins.analogWritePin(traffic_pin, temp)
 		basic.pause(500)
