@@ -31,7 +31,8 @@ namespace SmartCity {
 	let _temperature: number = -999.0
     let _humidity: number = -999.0
     let _readSuccessful: boolean = false
-	
+	let _sensorresponding: boolean = false
+
 	/**
      * Set traffic light
      * @param out_red describe parameter here, eg: boolean.true
@@ -121,6 +122,8 @@ namespace SmartCity {
         return sum/20;
     }
 	
+
+
     //% block="Get DHT11 at pin %dataPin|"
     function dht11_queryData( dataPin: DigitalPin) {
 
@@ -136,16 +139,21 @@ namespace SmartCity {
         _humidity = -999.0
         _temperature = -999.0
         _readSuccessful = false
-
+        _sensorresponding = false
         startTime = input.runningTimeMicros()
 
         //request data
         pins.digitalWritePin(dataPin, 0) //begin protocol
         basic.pause(18)
-        //if (pullUp) pins.setPull(dataPin, PinPullMode.PullUp) //pull up data pin if needed
+        pins.setPull(dataPin, PinPullMode.PullUp) //pull up data pin if needed
         pins.digitalReadPin(dataPin)
-        control.waitMicros(20)
-        while (pins.digitalReadPin(dataPin) == 1);
+        control.waitMicros(40)
+        if (pins.digitalReadPin(dataPin) == 1) {
+            //if no respone,exit the loop to avoid Infinity loop
+            pins.setPull(dataPin, PinPullMode.PullNone) //release pull up
+        }
+        else{
+            
         while (pins.digitalReadPin(dataPin) == 0); //sensor response
         while (pins.digitalReadPin(dataPin) == 1); //sensor response
 
@@ -159,7 +167,7 @@ namespace SmartCity {
         }
 
         endTime = input.runningTimeMicros()
-
+        pins.setPull(dataPin, PinPullMode.PullNone) //release pull up
         //convert byte number array to integer
         for (let index = 0; index < 5; index++)
             for (let index2 = 0; index2 < 8; index2++)
@@ -180,10 +188,12 @@ namespace SmartCity {
                 _temperature = resultArray[2] + resultArray[3] / 100
             
         }
-
+        
+       
         //wait 2 sec after query 
         basic.pause(2000)
 
+        }
     }
 
     //% block="DHT11 Read %dht11data| at pin %dht11pin|"

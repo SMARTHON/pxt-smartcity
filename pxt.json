@@ -1,6 +1,6 @@
 {
     "name": "smartcity",
-    "version": "0.1.32",
+    "version": "0.1.33",
     "description": "This is the extension for SMARTHON City IoT Starter Kit in PXT",
     "license": "MIT",
     "dependencies": {
