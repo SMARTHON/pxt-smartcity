@@ -153,7 +153,7 @@ namespace SmartCity {
             pins.setPull(dataPin, PinPullMode.PullNone) //release pull up
         }
         else{
-            
+        pins.setPull(dataPin, PinPullMode.PullNone) //release pull up
         while (pins.digitalReadPin(dataPin) == 0); //sensor response
         while (pins.digitalReadPin(dataPin) == 1); //sensor response
 
@@ -167,7 +167,7 @@ namespace SmartCity {
         }
 
         endTime = input.runningTimeMicros()
-        pins.setPull(dataPin, PinPullMode.PullNone) //release pull up
+
         //convert byte number array to integer
         for (let index = 0; index < 5; index++)
             for (let index2 = 0; index2 < 8; index2++)
