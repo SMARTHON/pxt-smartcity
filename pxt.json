@@ -1,8 +1,7 @@
 {
     "name": "smartcity",
-    "version": "0.1.36",
-    "description": "The package for Smart City IoT Starter Kit for micro:bit",
-	"icon": "./static/libs/city pxt banner.jpg",
+    "version": "0.1.35",
+    "description": "This is the extension for SMARTHON City IoT Starter Kit in PXT",
     "license": "MIT",
     "dependencies": {
         "core": "*",
@@ -17,6 +16,5 @@
     "testFiles": [
         "tests.ts"
     ],
-    "public": true,
-	
+    "public": true
 }
