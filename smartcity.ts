@@ -119,7 +119,7 @@ namespace SmartCity {
 		temp =temp/1023*100
         sum=sum+temp;
         }
-        return sum/20;
+        return parseInt((sum/20).toString());
     }
 	
 
