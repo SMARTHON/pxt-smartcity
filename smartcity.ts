@@ -32,7 +32,7 @@ namespace SmartCity {
     let _humidity: number = -999.0
     let _readSuccessful: boolean = false
 	let _sensorresponding: boolean = false
-
+    let _firsttime:boolean=true
 	/**
      * Set traffic light
      * @param out_red describe parameter here, eg: boolean.true
@@ -119,7 +119,7 @@ namespace SmartCity {
 		temp =temp/1023*100
         sum=sum+temp;
         }
-        return parseInt((sum/20).toString());
+        return parseInt((sum/20).toString()) ;
     }
 	
 
@@ -127,6 +127,10 @@ namespace SmartCity {
     //% block="Get DHT11 at pin %dataPin|"
     function dht11_queryData( dataPin: DigitalPin) {
 
+        if(_firsttime==true){
+            _firsttime=false
+            dht11_queryData(dataPin)
+        }
         //initialize
         let startTime: number = 0
         let endTime: number = 0
@@ -190,8 +194,8 @@ namespace SmartCity {
         }
         
        
-        //wait 2 sec after query 
-        basic.pause(2000)
+        //wait 1 sec after query 
+        basic.pause(1000)
 
         }
     }
