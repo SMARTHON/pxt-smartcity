@@ -36,7 +36,7 @@ basic.showNumber(SmartCity.read_light_sensor(AnalogPin.P0))
 ```
 
 ### 2. Show the Raindrop sensor reading
-The Raindrop sensor will return the water amount on the plane to detect the raindrop
+The Raindrop sensor will return the water amount on the plane to detect the raindrop<P>
 Maxmium:100<BR>
 Minmium:0<BR>
   
@@ -55,12 +55,12 @@ basic.showNumber(SmartCity.read_sound_sensor(AnalogPin.P0))
 
 ### 4. Show the DHT11 temperature and humidity sensor reading
 The DHT11 sensor will return the temperature and humidity in environment<P>
-Temperature<BR>
->Maxmium:50 Celsius degree<BR>
->Minmium:0 Celsius degree<BR>
-Humidity<BR>
->Maxmium:80%<BR>
->Minmium:20%<BR>
+  <B>For Temperature</B><BR>
+Maxmium:50 Celsius degree<BR>
+Minmium:0 Celsius degree<P>
+  <B>For Humidity</B><BR>
+Maxmium:80%<BR>
+Minmium:20%<BR>
   
 ```block
 basic.showNumber(SmartCity.readData(SmartCity.DHT11dataType.temperature, DigitalPin.P0))
@@ -85,6 +85,43 @@ if (SmartCity.read_motion_sensor(AnalogPin.P0)) {
 } else {
     basic.showIcon(IconNames.Sad)
 }
+```
+
+### 7. Control traffic light
+
+The traffic light have three led, you may control the led on/off seperartly.<P>
+
+In example,<BR>
+turn on three led and wait for 1s, then turn off the leds.<BR>
+  
+```block
+SmartCity.control_traffic_light(
+true,
+true,
+true,
+AnalogPin.P0
+)
+basic.pause(1000)
+SmartCity.control_traffic_light(
+false,
+false,
+false,
+AnalogPin.P0
+)
+```
+
+### 8. Control the LED
+You can control the on/off of led, or adjust to specific brightness.<BR>
+
+```block
+SmartCity.turn_white_led(0, AnalogPin.P0)
+```
+
+### 9. Control the servo
+You can control the servo rotate to specific degree 
+
+```block
+SmartCity.turn_servo(0, AnalogPin.P0)
 ```
 
 
