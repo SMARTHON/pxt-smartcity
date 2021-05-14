@@ -237,8 +237,16 @@ namespace SmartCity {
         }
 
         switch (unit) {
-            case DistanceUnit.Centimeters: return Math.round(d/58*1.4);
-            case DistanceUnit.Inches: return Math.round(d/148*1.4);
+            case DistanceUnit.Centimeters: 
+                if(control.ramSize()<20000){
+                    return Math.round(d/58*1.4);}
+                else{
+                    return Math.round(d/58);}
+            case DistanceUnit.Inches: 
+                if(control.ramSize()<20000){
+                    return Math.round(d/148*1.4);}
+                else{
+                    return Math.round(d/148);}
             default: return d ;
         }
     }
