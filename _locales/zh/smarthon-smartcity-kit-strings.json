@@ -1,0 +1,21 @@
+{
+  "SmartCity.DHT11dataType.humidity|block": "湿度",
+  "SmartCity.DHT11dataType.temperature|block": "温度",
+  "SmartCity.DistanceUnit.Centimeters|block": "厘米",
+  "SmartCity.DistanceUnit.Inches|block": "吋",
+  "SmartCity.DistanceUnit.MicroSeconds|block": "微秒",
+  "SmartCity.On_Off.off|block": "关",
+  "SmartCity.On_Off.on|block": "开",
+  "SmartCity.control_traffic_light|block": "交通灯控制 |红 $out_red 黄 $out_yellow 绿 $out_green 接口 %traffic_pin",
+  "SmartCity.readData|block": "DHT11 读取 %dht11data| 接口 %dht11pin|",
+  "SmartCity.read_distance_sensor|block": "取得 量度距离 使用单位 %unit trig接口 %trig echo接口 %echo",
+  "SmartCity.read_light_sensor|block": "取得 亮度传感器数值 接口 %light_pin",
+  "SmartCity.read_motion_sensor|block": "取得 动作传感器数值 接口 %motion_pin",
+  "SmartCity.read_raindrop_sensor|block": "取得 雨水传感器数值 接口 %rain_pin",
+  "SmartCity.read_sound_sensor|block": "取得 声音传应器数值 接口 %sound_pin",
+  "SmartCity.turn_servo|block": "转动舵机到 %deg 度 | 接口 %pin",
+  "SmartCity.turn_white_led|block": "开启白色LED至亮度 %intensity | 接口 %pin",
+  "SmartCity|block": "SmartCity",
+  "{id:category}SmartCity": "SmartCity",
+  "{id:subcategory}Output": "输出"
+}

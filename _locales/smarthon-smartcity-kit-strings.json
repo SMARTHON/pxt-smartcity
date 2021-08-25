@@ -1,0 +1,21 @@
+{
+  "SmartCity.DHT11dataType.humidity|block": "humidity",
+  "SmartCity.DHT11dataType.temperature|block": "temperature",
+  "SmartCity.DistanceUnit.Centimeters|block": "cm",
+  "SmartCity.DistanceUnit.Inches|block": "inches",
+  "SmartCity.DistanceUnit.MicroSeconds|block": "μs",
+  "SmartCity.On_Off.off|block": "off",
+  "SmartCity.On_Off.on|block": "on",
+  "SmartCity.control_traffic_light|block": "Control traffic light |Red $out_red Yellow $out_yellow Green $out_green at Pin %traffic_pin",
+  "SmartCity.readData|block": "DHT11 Read %dht11data| at pin %dht11pin|",
+  "SmartCity.read_distance_sensor|block": "Get distance unit %unit trig %trig echo %echo",
+  "SmartCity.read_light_sensor|block": "Get light value (percentage) at Pin %light_pin",
+  "SmartCity.read_motion_sensor|block": "Get motion (triggered or not) at Pin %motion_pin",
+  "SmartCity.read_raindrop_sensor|block": "Get raindrop value (percentage) at Pin %rain_pin",
+  "SmartCity.read_sound_sensor|block": "Get noise level (dB) at Pin %sound_pin",
+  "SmartCity.turn_servo|block": "Turn Servo to %deg degree |at %pin",
+  "SmartCity.turn_white_led|block": "Turn White LED to %intensity |at %pin",
+  "SmartCity|block": "SmartCity",
+  "{id:category}SmartCity": "SmartCity",
+  "{id:subcategory}Output": "Output"
+}

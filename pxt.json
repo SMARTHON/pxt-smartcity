@@ -1,6 +1,6 @@
 {
     "name": "smarthon-smartcity-kit",
-    "version": "0.1.41",
+    "version": "0.1.42",
     "description": "The package for Smart City IoT Starter Kit for micro:bit",
     "license": "MIT",
     "dependencies": {
@@ -11,7 +11,13 @@
     "files": [
         "README.md",
         "ns.ts",
-        "smartcity.ts"
+        "smartcity.ts",
+        "_locales/zh/smarthon-smartcity-kit-jsdoc-strings.json",
+        "_locales/zh/smarthon-smartcity-kit-strings.json",
+        "_locales/zh-CN/smarthon-smartcity-kit-jsdoc-strings.json",
+        "_locales/zh-CN/smarthon-smartcity-kit-strings.json",
+        "_locales/zh-TW/smarthon-smartcity-kit-jsdoc-strings.json",
+        "_locales/zh-TW/smarthon-smartcity-kit-strings.json"
     ],
     "testFiles": [
         "tests.ts"

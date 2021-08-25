@@ -1,0 +1,7 @@
+{
+  "SmartCity": "Sensors blocks",
+  "SmartCity.control_traffic_light": "Set traffic light",
+  "SmartCity.control_traffic_light|param|out_green": "describe parameter here, eg: boolean.true",
+  "SmartCity.control_traffic_light|param|out_red": "describe parameter here, eg: boolean.true",
+  "SmartCity.control_traffic_light|param|out_yellow": "describe parameter here, eg: boolean.true"
+}
