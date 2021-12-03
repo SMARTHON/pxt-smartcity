@@ -194,8 +194,8 @@ namespace SmartCity {
         }
         
        
-        //wait 1 sec after query 
-        basic.pause(1000)
+        //wait 1.5 sec after query 
+        basic.pause(1500)
 
         }
     }
