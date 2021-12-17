@@ -5,9 +5,6 @@ namespace SmartCity {
         //% block="on"
         on =1
     }
-	
-	
-
 	export enum DHT11dataType {
     //% block="temperature"
     temperature,
@@ -31,8 +28,9 @@ namespace SmartCity {
 	let _temperature: number = -999.0
     let _humidity: number = -999.0
     let _readSuccessful: boolean = false
-	let _sensorresponding: boolean = false
     let _firsttime:boolean=true
+    let _last_successful_query_temperature: number= 0
+    let _last_successful_query_humidity: number = 0
 	/**
      * Set traffic light
      * @param out_red describe parameter here, eg: boolean.true
@@ -140,11 +138,9 @@ namespace SmartCity {
         let resultArray: number[] = []
         for (let index = 0; index < 40; index++) dataArray.push(false)
         for (let index = 0; index < 5; index++) resultArray.push(0)
-        _humidity = -999.0
-        _temperature = -999.0
+        _humidity = 0
+        _temperature = 0
         _readSuccessful = false
-        _sensorresponding = false
-        startTime = input.runningTimeMicros()
 
         //request data
         pins.digitalWritePin(dataPin, 0) //begin protocol
@@ -163,15 +159,20 @@ namespace SmartCity {
 
         //read data (5 bytes)
         for (let index = 0; index < 40; index++) {
-            while (pins.digitalReadPin(dataPin) == 1);
-            while (pins.digitalReadPin(dataPin) == 0);
+            startTime = input.runningTimeMicros();
+            while (pins.digitalReadPin(dataPin) == 1){
+                endTime = input.runningTimeMicros()
+                if ((endTime - startTime) > 150) { break; }
+            };
+            while (pins.digitalReadPin(dataPin) == 0){
+                endTime = input.runningTimeMicros()
+                if ((endTime - startTime) > 150) { break; }
+            };
             control.waitMicros(28)
             //if sensor pull up data pin for more than 28 us it means 1, otherwise 0
             if (pins.digitalReadPin(dataPin) == 1) dataArray[index] = true
         }
-
-        endTime = input.runningTimeMicros()
-
+		
         //convert byte number array to integer
         for (let index = 0; index < 5; index++)
             for (let index2 = 0; index2 < 8; index2++)
@@ -186,19 +187,18 @@ namespace SmartCity {
 
         //read data if checksum ok
         if (_readSuccessful) {
-            
-                //DHT11
                 _humidity = resultArray[0] + resultArray[1] / 100
                 _temperature = resultArray[2] + resultArray[3] / 100
-            
-        }
-        
-       
-        //wait 1.5 sec after query 
-        basic.pause(1500)
-
+                _last_successful_query_humidity = _humidity
+                _last_successful_query_temperature = _temperature         
+        }else{
+            _humidity = _last_successful_query_humidity
+            _temperature = _last_successful_query_temperature
         }
     }
+		 //wait 1.5 sec after query 
+    basic.pause(1500)
+}
 
     //% block="DHT11 Read %dht11data| at pin %dht11pin|"
 	//% weight=150
@@ -206,11 +206,15 @@ namespace SmartCity {
 		// querydata
 		dht11_queryData(dht11pin)
 		//return temperature /humidity
-		if(dht11data == DHT11dataType.temperature && _readSuccessful)
-			return Math.round (_temperature)
-		else if(dht11data == DHT11dataType.humidity && _readSuccessful)
-			return Math.round (_humidity)
-		else return 0
+		// if(dht11data == DHT11dataType.temperature && _readSuccessful)
+			// return Math.round (_temperature)
+		// else if(dht11data == DHT11dataType.humidity && _readSuccessful)
+			// return Math.round (_humidity)
+		// else return 0
+		if (dht11data == DHT11dataType.temperature){
+            return Math.round(_temperature)}
+        else 
+            return Math.round(_humidity) 
     }
 
 	

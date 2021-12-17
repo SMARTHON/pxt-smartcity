@@ -1,6 +1,6 @@
 {
     "name": "smarthon-smartcity-kit",
-    "version": "0.1.43",
+    "version": "0.1.44",
     "description": "The package for Smart City IoT Starter Kit for micro:bit",
     "license": "MIT",
     "dependencies": {
