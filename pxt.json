@@ -1,11 +1,11 @@
 {
     "name": "smarthon-smartcity-kit",
-    "version": "0.1.41",
+    "version": "0.1.51",
     "description": "The package for Smart City IoT Starter Kit for micro:bit",
     "license": "MIT",
     "dependencies": {
         "core": "*",
-		"smarthon-iotbit" : "github:SMARTHON/pxt-iot-bit#v0.7.0",
+		"smarthon-iotbit" : "github:SMARTHON/pxt-iot-bit#v0.9.3",
 		"neopixel": "github:microsoft/pxt-neopixel#v0.7.3"
     },
     "files": [
